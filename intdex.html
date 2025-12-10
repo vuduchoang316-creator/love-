@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💌 Thư Tình Yêu 💌</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            perspective: 1000px;
+        }
+        
+        .envelope {
+            width: 320px;
+            height: 200px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.6s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .envelope:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
+        }
+        
+        .envelope.open {
+            transform: rotateX(10deg);
+        }
+        
+        .envelope-front {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .envelope-front::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(135deg, #FF6B9D 0%, #FFC75F 100%);
+            opacity: 0.1;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+        }
+        
+        .heart-icon {
+            font-size: 60px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            z-index: 10;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            75% {
+                transform: scale(1.1);
+            }
+        }
+        
+        .letter-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 600px;
+            background: linear-gradient(135deg, #FFE5E5 0%, #FFF5E5 100%);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: -1;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.6s ease;
+            border: 3px solid #FF6B9D;
+        }
+        
+        .letter-text.show {
+            z-index: 1000;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .letter-text h1 {
+            color: #FF6B9D;
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .letter-text p {
+            color: #333;
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        .letter-text .signature {
+            color: #764ba2;
+            font-size: 20px;
+            text-align: right;
+            margin-top: 30px;
+            font-weight: bold;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #FF6B9D;
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background: #E55A8D;
+            transform: rotate(90deg);
+        }
+        
+        .instruction {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            animation: float 2s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0px);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="envelope" onclick="openLetter()">
+            <div class="envelope-front">
+                <div class="heart-icon">💌</div>
+            </div>
+        </div>
+        <div class="instruction">Nhấn vào thư để mở 💕</div>
+    </div>
+    
+    <div class="letter-text" id="letterBox">
+        <button class="close-btn" onclick="closeLetter()">✕</button>
+        <h1>💕 Em Ơi 💕</h1>
+        <p>Anh yêu em 🥰</p>
+        <p>Anh xin lỗi vì những điều anh đã làm sai.</p>
+        <p>Anh mong em tha thứ cho anh ❤️</p>
+        <p>Anh sẽ cố gắng thay đổi để hài hòa hơn,</p>
+        <p>để tình yêu của chúng ta luôn tươi sáng mỗi ngày 🌟</p>
+        <p style="margin-top: 25px; font-size: 16px;">Yêu em nhiều lắm 💗</p>
+        <div class="signature">- Anh Yêu -</div>
+    </div>
+    
+    <script>
+        function openLetter() {
+            document.getElementById('letterBox').classList.add('show');
+        }
+        
+        function closeLetter() {
+            document.getElementById('letterBox').classList.remove('show');
+        }
+        
+        // Đóng thư khi nhấn ngoài vùng
+        document.addEventListener('click', function(event) {
+            let letterBox = document.getElementById('letterBox');
+            if (letterBox.classList.contains('show') && 
+                !event.target.closest('.letter-text') && 
+                !event.target.closest('.envelope')) {
+                closeLetter();
+            }
+        });
+    </script>
+</body>
+</html>
